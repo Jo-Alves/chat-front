@@ -2,22 +2,62 @@
   <div id="registration">
     <div id="container">
       <div class="input-login">
-        <input type="text" placeholder="Seu nome" required />
+        <input
+          type="text"
+          placeholder="Seu nome"
+          v-model="user.name"
+          required
+        />
       </div>
       <div class="input-login">
-        <input type="email" placeholder="Seu melhor email" required />
+        <input
+          type="email"
+          placeholder="Seu melhor email"
+          v-model="user.email"
+          required
+        />
       </div>
       <div class="input-login">
-        <input type="password" placeholder="Sua senha" required />
+        <input
+          type="password"
+          placeholder="Sua senha"
+          v-model="user.password"
+          required
+        />
       </div>
       <button id="btn-save" @click="save">Salvar</button>
-      <p>Já não tem cadastro? <a href="#">Entre aqui.</a></p>
+      <p>Já tem cadastro? <router-link to="/login">Entre aqui.</router-link></p>
     </div>
   </div>
 </template>
   
-  <script>
-export default {};
+<script>
+import axios from "../../config/axios";
+export default {
+  data() {
+    return {
+      user: {
+        name: "",
+        email: "",
+        password: "",
+      },
+      error: "",
+    };
+  },
+  methods: {
+    save() {
+      axios
+        .post("/user", this.user)
+        .then(() => {
+          this.$router.push("/login");
+        })
+        .catch((error) => {
+          this.error = error.response.data.error;
+          console.log(this.error);
+        });
+    },
+  },
+};
 </script>
   
   <style>
@@ -64,6 +104,7 @@ export default {};
   border: none;
   margin: 15px auto 10px;
   display: block;
+  cursor: pointer;
 }
 
 p {

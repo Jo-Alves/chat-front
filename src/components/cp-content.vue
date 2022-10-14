@@ -1,14 +1,12 @@
 <template>
   <div>
-    <cp_login />
+    <router-view></router-view>
   </div>
 </template>
 
 <script>
-import cp_login from "@/components/cp_registration.vue"
 export default {
 components: {
-  cp_login
 }
 }
 </script>

@@ -2,20 +2,47 @@
   <div id="login">
     <div id="container">
       <div class="input-login">
-        <input type="email" placeholder="Seu melhor email" required>
+        <input type="email" v-model="user.email" placeholder="Seu melhor email" @input="clear" required>
       </div>
+      <p v-if="error.email">{{error.email}}</p>
+      
       <div class="input-login">
-        <input type="password" placeholder="Sua senha" required>  
+        <input type="password" placeholder="Sua senha" @input="clear" v-model="user.password" required>  
       </div>
-      <button id="btn-login">Entrar</button>
-      <p>Você não tem cadastro? <a href="#">Cadastre-se aqui.</a></p>
+      <p v-if="error.password">{{error.password}}</p>
+      <button id="btn-login" @click="login">Entrar</button>
+      <p>Você não tem cadastro? <router-link to="/">Cadastre-se aqui.</router-link></p>
     </div>
   </div>
 </template>
 
 <script>
+import axios from "../../config/axios"
 export default {
-
+data(){
+  return {
+    error: "",
+    user: {
+      email: "",
+      password: ""
+    }
+  }
+},
+methods: {
+  login(){
+    axios.post("/login", this.user)
+    .then(response => {
+      localStorage.setItem("tk-auth", response.data.tk)
+      this.$router.push("/home")
+    })
+    .catch(error => {
+      this.error = error.response.data.error
+    })
+  },
+  clear(){
+    this.error = ""
+  }
+}
 }
 </script>
 

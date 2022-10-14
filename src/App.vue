@@ -1,17 +1,17 @@
 <template>
   <div id="app">
-    <tp_header/>
-    <tp_content/>
+    <cp_header/>
+    <cp_content/>
   </div>
 </template>
 
 <script>
-import tp_header from '@/components/templates/tp_header.vue'
-import tp_content from "@/components/templates/tp-content.vue"
+import cp_header from '@/components/cp_header.vue'
+import cp_content from "@/components/cp-content.vue"
 export default {
   components: {
-    tp_header,
-    tp_content
+    cp_header,
+    cp_content
   },
 };
 </script>
